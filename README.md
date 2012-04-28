@@ -2,25 +2,40 @@
 
 Used to encode or decode a URL params. This is useful for sending out encrypted links with token and then unencrypting, decoding and parsing them later when they come back to the app.
 
+## Getting started example
+
 ```ruby
-	# singleton encrypter shared between Encoder and Decoder
-	Params::Encrypter.password = "my very secret password"
+	# singleton Crypter shared between Encoder and Decoder (uses 'gibberish' gem)
+	# Recommended: load password from a DB table, YAML file or similar
+
+	Params::Crypter.password = "my very secret password"
 
 	# encrypt and encode the params
-	params = {:id => User.id, :name => User.name}
-	encoded_params = Params::Encoder.new(params).encode
+	params = {:id => 7, :name => 'kris'}
 
-	email_link = "#{domain}/invite?id=" + encoded_params
+	encoder = Params::Encoder.new(params)
+	encoder.params # => 'id=7&name=kris'  
+
+	encoded_params = encoder.encoded
+
+	email_link = "#{domain}/invite?token=" + encoded_params
 
 	# send link in email or Facebook notification or similar
 
 	# later... someone clicks on the link
 
 	# decrypt and decode the params
-	decoded_params = Params::Decoder.new(params).decode	
+	decoded_params = Params::Decoder.new(params).decoded
 
-	hash = decoded_params.hash
+	# retrieve hash from param values
+	hash = decoded_params.as_hash(:sym)
+	
+	# retrieve param values from hash
+	id 		= hash[:id].to_i
+	name 	= hash[:name]
 ```
+
+Look at the specs for more on usage. 
 
 ## Contributing to params_extractor
  
