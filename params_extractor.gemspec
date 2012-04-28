@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "params_extractor"
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
@@ -25,6 +25,9 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
+    "lib/params/crypter.rb",
+    "lib/params/decoder.rb",
+    "lib/params/encoder.rb",
     "lib/params_extractor.rb",
     "params_extractor.gemspec",
     "spec/params_extractor_spec.rb",
