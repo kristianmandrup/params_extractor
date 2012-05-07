@@ -1,12 +1,19 @@
 module Params
-	class Decoder
+	class Decoder 
+		include Params::Base
+		
 		attr_reader :params, :hash
 
-		def initialize params
-			raise "No profile params" if !params || params.empty?
-			@params = params
-		end
+		def initialize *args
+			raise "Decoder needs params to encode" if !args || args.empty?
+			args = args.flatten
+			options 	= args.last
+			if options.kind_of? Hash			
+				@crypter 	= options.delete(:crypter) if options				
+			end
 
+			@params = args.first
+		end
 
 		# fx decoder.as_hash['a'] returns value of a
 		def as_hash mode = :str			
@@ -21,7 +28,7 @@ module Params
 
 		# decode in reverse order!
 		def decoded
-			@decoded ||= crypter.decrypt decoded_params
+			@decoded ||= use_crypter? ? crypter.decrypt(decoded_params) : decoded_params
 		end
 
 		protected
@@ -31,7 +38,7 @@ module Params
 		end
 
 		def crypter
-			Crypter.instance
+			Crypter.instance if crypter?
 		end		
 	end
 end

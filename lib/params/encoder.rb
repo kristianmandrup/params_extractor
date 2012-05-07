@@ -1,14 +1,22 @@
 module Params
 	class Encoder
+		include Params::Base
+
 		attr_reader :params
 
-		def initialize params
-			raise "No profile params" if !params || params.empty?
-			@params = case params
+		def initialize *args
+			raise "Encoder needs params to encode" if !args || args.empty?
+			args = args.flatten
+			options = args.last 
+			if options.kind_of? Hash				
+				@crypter = options.delete(:crypter)
+			end
+			arg = args.first
+			@params = case arg
 			when Hash
-				create_from params
+				create_from arg
 			when String
-				params
+				arg
 			else
 				raise "Must be a Hash or String, was #{arg}"
 			end
@@ -16,7 +24,7 @@ module Params
 
 		# encode after encryption to ensure Base64 compatibility in link
 		def encoded
-			@encoded ||= Base64.encode64 encrypted_params
+			@encoded ||= use_crypter? ? Base64.encode64(encrypted_params) : Base64.encode64(params)
 		end
 
 		protected
@@ -34,7 +42,7 @@ module Params
 		end		
 
 		def crypter
-			Crypter.instance
+			Crypter.instance if crypter?
 		end
 	end
 end

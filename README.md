@@ -5,6 +5,9 @@ Used to encode or decode a URL params. This is useful for sending out encrypted 
 ## Getting started example
 
 ```ruby
+	Params::Crypter.off! # turn encryption off (is on by default) - global setting
+	Params::Crypter.on! # turn encryption back on - global setting
+
 	# singleton Crypter shared between Encoder and Decoder (uses 'gibberish' gem)
 	# Recommended: load password from a DB table, YAML file or similar
 
@@ -33,6 +36,14 @@ Used to encode or decode a URL params. This is useful for sending out encrypted 
 	# retrieve param values from hash
 	id 		= hash[:id].to_i
 	name 	= hash[:name]
+
+	# set crypter on/off for individual encoder or decoder
+
+	# turn off for encoder
+	encoder = Params::Encoder.new "a=7", :crypter => false
+
+	# turn off for decoder
+	decoder = Params::Decoder.new token, :crypter => false
 ```
 
 Look at the specs for more on usage. 
