@@ -26,6 +26,10 @@ module Params
 			end
 		end
 
+		def as_clean_hash mode = :str
+			clean_params(as_hash mode)
+		end
+
 		# decode in reverse order!
 		def decoded
 			@decoded ||= use_crypter? ? crypter.decrypt(decoded_params) : decoded_params

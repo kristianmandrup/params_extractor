@@ -15,16 +15,16 @@ describe Params::Decoder do
   end
 
   let(:data) do 
-    {:id => '7', :name => 'kris'}
+    {:id => '7', :name => 'kris', :lang => 'na'}
   end
 
   let(:decoded_data) do
-    {'id' => '7', 'name' => 'kris'}
+    {'id' => '7', 'name' => 'kris', 'lang' => 'na'}
   end
 
-  # before do
-  #   Params::Crypter.on!
-  # end
+  let(:decoded_clean_data) do
+    {'id' => '7', 'name' => 'kris', 'lang' => nil}
+  end
 
   describe 'crypter?' do
     specify { subject.crypter?.should be_true }
