@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "params_extractor"
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
-  s.date = "2012-05-07"
+  s.date = "2012-05-08"
   s.description = "Encode and encrypt prams and leter unencryt and decode them - useful when sending invites with tokens"
   s.email = "kmandrup@gmail.com"
   s.extra_rdoc_files = [
